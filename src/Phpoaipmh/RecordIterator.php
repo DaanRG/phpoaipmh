@@ -160,12 +160,12 @@ class RecordIterator implements \Iterator
     public function nextItem()
     {
         //If no items in batch, and we have a resumptionToken or need to make initial request...
-        if (count($this->batch) == 0 && ($this->resumptionToken or $this->numRequests == 0)) {
+        if ((!$this->batch || count($this->batch) == 0) && ($this->resumptionToken or $this->numRequests == 0)) {
             $this->retrieveBatch();
         }
 
         //if still items in current batch, return one
-        if (count($this->batch) > 0) {
+        if ($this->batch && count($this->batch) > 0) {
             $this->numProcessed++;
 
             $item = array_shift($this->batch);
