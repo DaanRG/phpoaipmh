@@ -225,8 +225,8 @@ class RecordIterator implements \Iterator, RecordIteratorInterface
         $this->numRequests++;
 
         //Result format error?
-        if (! isset($resp->$verb->$nodeName)) {
-            throw new MalformedResponseException(sprintf("Expected XML element list '%s' missing for verb '%s'", $nodeName, $verb));
+        if (! isset($resp->$verb)) {
+            throw new MalformedResponseException(sprintf("Expected XML element of verb '%s'", $verb));
         }
 
         //Set the resumption token and expiration date, if specified in the response
@@ -246,8 +246,10 @@ class RecordIterator implements \Iterator, RecordIteratorInterface
         }
 
         //Process the results
-        foreach ($resp->$verb->$nodeName as $node) {
-            $this->batch[] = $node;
+        if (isset($resp->$verb->$nodeName)) {
+            foreach ($resp->$verb->$nodeName as $node) {
+                $this->batch[] = $node;
+            }
         }
 
         //Return a count
