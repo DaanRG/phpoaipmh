@@ -253,7 +253,7 @@ class RecordIterator implements \Iterator, RecordIteratorInterface
         }
 
         //Return a count
-        return count($this->batch);
+        return $this->batch ? count($this->batch) : 0;
     }
 
     /**
