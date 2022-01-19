@@ -5,3 +5,7 @@ composer.lock
 # IDE Stuff
 .idea
 .idea/*
+
+# Testing
+build/
+.phpunit.result.cache
